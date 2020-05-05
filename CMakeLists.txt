@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(cognitao_ros2)
+project(cognitao_ros2_examples)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -26,15 +26,7 @@ find_package(rclcpp_action REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_runtime REQUIRED)
 find_package(cognitao REQUIRED)
-
-
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/Event.msg"
-  "msg/KeyValue.msg"
-  "msg/Goal.msg"
-  "action/Action.action"
-  DEPENDENCIES builtin_interfaces action_msgs
-)
+find_package(cognitao_ros2 REQUIRED)
 
 #colcon build
 
@@ -46,55 +38,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 #
 
 
-#
-# Used to include generated messages/actions by this package
-#
-get_default_rmw_implementation(rmw_implementation)
-find_package("${rmw_implementation}" REQUIRED)
-get_rmw_typesupport(typesupport_impls "${rmw_implementation}" LANGUAGE "cpp")
-
-
-add_library(cognitao_ros2_shared SHARED 
-  src/runner/Ros2Runner.cpp
-  src/runner/Ros2RunnerPlugin.cpp
-  src/data_source/Ros2DataSource.cpp
-  src/data_source/Ros2DataSource_pluggin.cpp
-)
-
-# 1 - Includes generated messages directories and local include/ dir
-target_include_directories(cognitao_ros2_shared 
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
-
-#
-
-foreach(typesupport_impl ${typesupport_impls})
-  rosidl_target_interfaces(cognitao_ros2_shared
-    ${PROJECT_NAME} ${typesupport_impl}
-  )
-endforeach()
-#
-
-ament_target_dependencies(cognitao_ros2_shared 
-  rclcpp
-  std_msgs
-  rclcpp_action
-)
-
-target_link_libraries(cognitao_ros2_shared
-  CogniTao::cognitao_core
-)
-
-install(TARGETS
-  cognitao_ros2_shared
-  DESTINATION /usr/lib/cognitao/plugins/
-)
-
-
 add_executable(action_server_example 
-  src/server_example/server_example_main.cpp
+  src/server_example_main.cpp
 )
 
 target_include_directories(action_server_example 
@@ -120,6 +65,7 @@ ament_target_dependencies(action_server_example
   "rclcpp"
   "rclcpp_action"
   std_msgs
+  cognitao_ros2
 )
 
 target_link_libraries(action_server_example ${rclcpp_LIBRARIES} ${rmw_connext_cpp_LIBRARIES} ${std_interfaces})

@@ -1,10 +1,10 @@
 /**
- * @brief ROS 2Action Wait Server
+ * @brief Ros2ActionWaitServer
  * 
  * @file Ros2ActionWaitServer.h
  * 
  * @author Lin Azan (lin@cogniteam.com)
- * @date 2020-03-15
+ * @date 2020-05-05
  * @copyright Cogniteam (c) 2020
  *    
  * MIT License

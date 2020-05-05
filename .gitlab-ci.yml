@@ -1,0 +1,10 @@
+
+variables:
+  APT_REPOSITORY: "cognitao"
+  DEPEND_PACKAGES: "ros-ROS_DISTRO-cognitao-ros2"
+  DEPLOY_CLOUD: "true"
+  BUILD_ELOQUENT: "true"
+  
+include:
+  - project: "cogniteam/develop"
+    file: /gitlab-ci/ros2_cmake_build_and_deploy.yaml
