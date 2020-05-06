@@ -1,0 +1,6 @@
+<machine name="ros2_runner_test" type="bt">
+    <parallel name="test">
+        <task name="wait" runner="ros2" action="wait" param_time="5.0" description="Wait some time"/>
+        <task name="wait" runner="ros2" action="wait" param_time="5.0" description="Wait some time"/>
+    </parallel>
+</machine>

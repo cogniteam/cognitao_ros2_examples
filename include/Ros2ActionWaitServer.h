@@ -79,8 +79,8 @@ private:
             loop_rate.sleep();
 
             //cancel goal
-            if (ros2ActionContext.getGoalHandle()->is_canceling() ) {             
-                ros2ActionContext.canceled();            
+            if (ros2ActionContext.isPreemptRequested() ) {             
+                ros2ActionContext.cancelGoal();            
                 return;
             }      
 
