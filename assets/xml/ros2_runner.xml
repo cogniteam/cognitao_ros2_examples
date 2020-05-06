@@ -1,4 +1,0 @@
-<machine name="ros2_runner_test" type="bt">
-    <task name="wait" runner="ros2" param_time="5.0" 
-            description="Wait some time"/>
-</machine>
